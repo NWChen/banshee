@@ -17,11 +17,12 @@ git commit
 git push origin master
 ```
 
-### Not my first time
-If you're making changes to an existing feature, switch to the appropriate feature branch using `git checkout <name of branch>`. If you're developing a new feature (e.g. a new scraper module), the following is recommended:
+### Not my first time contributing to this repo
+If you're making changes to an existing feature, switch to the appropriate feature branch using `git checkout <name of branch>`. If you're developing a new feature (e.g. a new scraper module), then use `git checkout -b <name of feature`, which creates and switches to a new branch. Either way, afterwards you can update this repo with your changes via the following:
 ```bash
-git checkout -b <name of feature>
 git add <name of file/dir you changed>
 git commit
 git push
 ```
+
+### W
