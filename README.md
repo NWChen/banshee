@@ -31,5 +31,3 @@ git add <name of file/dir you changed>
 git commit
 git push
 ```
-
-### W
