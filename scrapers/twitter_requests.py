@@ -5,14 +5,10 @@ class Scrape(object):
 	def __init__(self):
 		self.api = get_api()
 
-	def get_by_username(self, user_name, count=1):
+	def format_tweets(self, tweets):
 		"""
-		returns the most recent status of a username
-		can return multiple statuses using count
-		returned tweet is formatted into a dict with only chosen values
+		converts a list of tweet objects to a dict of only relevant data
 		"""
-		tweets = self.api.user_timeline(screen_name=user_name, count=count)
-
 		formatted_tweets = []
 
 		for tweet in tweets:
@@ -31,3 +27,36 @@ class Scrape(object):
 			formatted_tweets.append(new_tweet)
 
 		return formatted_tweets
+
+	def get_by_username(self, user_name:str, count=1):
+		"""
+		returns the most recent status of a username
+		can return multiple statuses using count
+		"""
+		tweets = self.api.user_timeline(screen_name=user_name, count=count)
+
+		return self.format_tweets(tweets)
+
+	def get_by_keywords(self, keywords:list):
+		"""
+		uses a list of keywords to get related tweets
+		"""
+		keywords = ' OR '.join(keywords)
+		tweets = self.api.search(q=keywords)
+		return self.format_tweets(tweets)
+
+	def get_retweets(self, tweet_id, count=1):
+		"""
+		returns up to the first 100 tweets of the given tweet
+		"""
+		tweets = self.api.retweets(id=tweet_id, count=count)
+		return self.format_tweets(tweets)
+
+	def get_by_location(self, geocode, language=None, since_id=None):
+		"""
+		geocode is latitude, longitude, radius
+		language of tweets being retreived
+		since_id tweet ids more recent than the param
+		"""
+		#self.api.search()
+		pass
