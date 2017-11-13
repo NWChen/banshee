@@ -4,4 +4,4 @@ python:
 install:
     - "pip install -r requirements.txt"
 script:
-    - python tests/__init__.py ../scrapers/example_scraper.py 
+    - python tests/*.py

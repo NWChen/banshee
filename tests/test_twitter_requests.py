@@ -1,4 +1,7 @@
-from banshee.scrapers.twitter_requests import Scrape
+import sys
+import os
+sys.path.append(os.getcwd() + '/../')
+from scrapers.twitter_requests import Scrape
 
 def test_get_by_username():
     """
