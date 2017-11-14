@@ -1,15 +1,17 @@
 from flask import Flask, jsonify, render_template, request, Response
-#from flask_socketio import SocketIO, send, emit
+from flask_socketio import SocketIO
 from scrapers.twitter_requests import Scrape
 import os
 
 app = Flask(__name__)
 scraper = Scrape()
-#socketio = SocketIO(app)
+socketio = SocketIO(app)
+thread = Thread()
+thread_stop_event = Event()
 
-#@socketio.on('client_connected')
-def handle_client_connection(json):
-    print('connection state: %s' % str(json))
+@socketio.on('client_connected')
+def client_connected(data):
+    print('client connected with message: ' + data)
 
 @app.route('/')
 def index():
@@ -31,4 +33,5 @@ def index_post():
     return render_template('index.html', data=tweets)
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=int(os.environ.get("PORT", 5000)))
+    socketio.run(app)
+    #app.run(host='0.0.0.0', port=int(os.environ.get("PORT", 5000)))
