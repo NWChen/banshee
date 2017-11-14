@@ -33,53 +33,54 @@
       <div class="medium-6 columns">
         
 		<h3>Query Parameters</h3>
+        <form method="POST">
+            <div class="row">
+            <div class="small-3 columns">
+                <label for="middle-label" class="middle">Twitter Username</label>
+            </div>
+            <div class="small-9 columns">
+                <input type="text" name="username" id="middle-label" placeholder="@example">
+            </div>
+            </div>
+            
+            <div class="row">
+            <div class="small-3 columns">
+                <label for="middle-label" class="middle">Earliest Date</label>
+            </div>
+            <div class="small-9 columns">
+                <input type="text" name="earliest-date" id="middle-label" placeholder="2/25/2017">
+            </div>
+            </div>
+            
+            <div class="row">
+            <div class="small-3 columns">
+                <label for="middle-label" class="middle">Latest Date</label>
+            </div>
+            <div class="small-9 columns">
+                <input type="text" name="latest-date" id="middle-label" placeholder="3/16/2017">
+            </div>
+            </div>
+            
+            <div class="row">
+            <div class="small-3 columns">
+                <label for="middle-label" class="middle">Tweet Keywords</label>
+            </div>
+            <div class="small-9 columns">
+                <input type="text" name="keywords" id="middle-label" placeholder="cake, pie, beets">
+            </div>
+            </div>
+            
+            <div class="row">
+            <div class="small-3 columns">
+                <label for="middle-label" class="middle">Minimum Retweets</label>
+            </div>
+            <div class="small-9 columns">
+                <input type="text" name="retweets" id="middle-label" placeholder="25">
+            </div>
+            </div>
 
-        <div class="row">
-          <div class="small-3 columns">
-            <label for="middle-label" class="middle">Twitter Username</label>
-          </div>
-          <div class="small-9 columns">
-            <input type="text" id="middle-label" placeholder="@example">
-          </div>
-        </div>
-		
-		<div class="row">
-          <div class="small-3 columns">
-            <label for="middle-label" class="middle">Earliest Date</label>
-          </div>
-          <div class="small-9 columns">
-            <input type="text" id="middle-label" placeholder="2/25/2017">
-          </div>
-        </div>
-		
-		<div class="row">
-          <div class="small-3 columns">
-            <label for="middle-label" class="middle">Latest Date</label>
-          </div>
-          <div class="small-9 columns">
-            <input type="text" id="middle-label" placeholder="3/16/2017">
-          </div>
-        </div>
-		
-		<div class="row">
-          <div class="small-3 columns">
-            <label for="middle-label" class="middle">Tweet Keywords</label>
-          </div>
-          <div class="small-9 columns">
-            <input type="text" id="middle-label" placeholder="cake, pie, beets">
-          </div>
-        </div>
-		
-		<div class="row">
-          <div class="small-3 columns">
-            <label for="middle-label" class="middle">Minimum Retweets</label>
-          </div>
-          <div class="small-9 columns">
-            <input type="text" id="middle-label" placeholder="25">
-          </div>
-        </div>
-
-        <a href="#" class="button large expanded">Search</a>
+            <input type="submit" class="button large expanded" value="Search">
+        </form>
 
         </div>
 			  
