@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, render_template, request, Response
 #from flask_socketio import SocketIO, send, emit
 from scrapers.twitter_requests import Scrape
+import os
 
 app = Flask(__name__)
 scraper = Scrape()
