@@ -5,8 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Banshee</title>
     <link rel="stylesheet" href="http://dhbhdrzi4tiry.cloudfront.net/cdn/sites/foundation.min.css">
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
+    <script type="text/javascript" charset="utf-8">
+    var socket = io.connect('http://' + document.domain + ':' + location.port);
+        socket.on('connect', function() {
+                    socket.emit('client_connected', {data: 'connected'});
+                        });
+    </script>
   </head>
   <body>
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
     
     <div class="top-bar">
       <div class="row">
@@ -88,7 +96,7 @@
       <div class="medium-6 columns">
         <h3>Results</h3>
 
-		<p>What is this going to look like? What does your script return?</p>
+        <p id="data" style="overflow-y: scroll;">{{ data }}</p>
 
         </div>
     </div>
