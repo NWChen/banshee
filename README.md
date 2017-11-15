@@ -14,6 +14,7 @@ Peter Richards, pfr2109
 ## Deployment
 To run `banshee`, make sure you're running Python 3.5. `virtualenv` is recommended but not necessary. Make sure you have all necessary packages by running `pip install -r requirements.txt`. To start the app,
 ```bash
+cd banshee
 python server.py
 ```
 and open your browser to `localhost:5000`.
