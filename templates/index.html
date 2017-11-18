@@ -9,17 +9,17 @@
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"
     integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
       crossorigin="anonymous"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/background-scripts.js') }}"></script>
   </head>
   <body>
     <script type="text/javascript">
         $(document).ready(function() {
+
             var socket = io.connect('http://' + document.domain + ':' + location.port + '/stream');
             console.log(socket);
             socket.on('connect', function() {
-                console.log('connected');
-                socket.on('message', function(message) {
-                    console.log(message.contents);
-                    $('#data').html(message.contents);
+                $('#search').click(function() {
+                    socket.emit('search', {
                 });
             });
         });
@@ -47,15 +47,13 @@
 
     <div class="row">
       <div class="medium-6 columns">
-
-		<h3>Query Parameters</h3>
-        <form method="POST">
+		    <h3>Query Parameters</h3>
             <div class="row">
             <div class="small-3 columns">
                 <label for="middle-label" class="middle">Twitter Username</label>
             </div>
             <div class="small-9 columns">
-                <input type="text" name="username" id="middle-label" placeholder="@example or example">
+                <input type="text" id="username" class="middle-label" placeholder="@example or example">
             </div>
             </div>
 
@@ -64,7 +62,7 @@
                 <label for="middle-label" class="middle">Earliest Date</label>
             </div>
             <div class="small-9 columns">
-                <input type="text" name="earliest-date" id="middle-label" placeholder="2/25/2017">
+                <input type="text" id="earliest-date" class="middle-label" placeholder="2/25/2017">
             </div>
             </div>
 
@@ -73,7 +71,7 @@
                 <label for="middle-label" class="middle">Latest Date</label>
             </div>
             <div class="small-9 columns">
-                <input type="text" name="latest-date" id="middle-label" placeholder="3/16/2017">
+                <input type="text" id="latest-date" class="middle-label" placeholder="3/16/2017">
             </div>
             </div>
 
@@ -82,7 +80,7 @@
                 <label for="middle-label" class="middle">Tweet Keywords</label>
             </div>
             <div class="small-9 columns">
-                <input type="text" name="keywords" id="middle-label" placeholder="cake, pie, beets">
+                <input type="text" id="keywords" class="middle-label" placeholder="cake, pie, beets">
             </div>
             </div>
 
@@ -91,13 +89,12 @@
                 <label for="middle-label" class="middle">Minimum Retweets</label>
             </div>
             <div class="small-9 columns">
-                <input type="text" name="retweets" id="middle-label" placeholder="25">
+                <input type="text" id="retweets" class="middle-label" placeholder="25">
             </div>
             </div>
 
-            <input type="submit" class="button large expanded" value="Search">
-
-        </form>
+            <button id="search" class="button large expanded">Search</button>
+            
         </div>
 
         <div class="medium-6 columns">
