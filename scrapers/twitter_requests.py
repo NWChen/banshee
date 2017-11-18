@@ -1,6 +1,6 @@
 from scrapers.api_setup import get_api
     
-class Scrape(object):
+class TwitterRequests(object):
     
     def __init__(self):
         self.api = get_api()
