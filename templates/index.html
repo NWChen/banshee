@@ -24,7 +24,6 @@
             });
         });
     </script>
-    
     <div class="top-bar">
       <div class="row">
         <div class="top-bar-left">
@@ -45,10 +44,10 @@
     </div>
 
     <br>
-      
+
     <div class="row">
       <div class="medium-6 columns">
-        
+
 		<h3>Query Parameters</h3>
         <form method="POST">
             <div class="row">
@@ -59,7 +58,7 @@
                 <input type="text" name="username" id="middle-label" placeholder="@example or example">
             </div>
             </div>
-            
+
             <div class="row">
             <div class="small-3 columns">
                 <label for="middle-label" class="middle">Earliest Date</label>
@@ -68,7 +67,7 @@
                 <input type="text" name="earliest-date" id="middle-label" placeholder="2/25/2017">
             </div>
             </div>
-            
+
             <div class="row">
             <div class="small-3 columns">
                 <label for="middle-label" class="middle">Latest Date</label>
@@ -77,7 +76,7 @@
                 <input type="text" name="latest-date" id="middle-label" placeholder="3/16/2017">
             </div>
             </div>
-            
+
             <div class="row">
             <div class="small-3 columns">
                 <label for="middle-label" class="middle">Tweet Keywords</label>
@@ -86,7 +85,7 @@
                 <input type="text" name="keywords" id="middle-label" placeholder="cake, pie, beets">
             </div>
             </div>
-            
+
             <div class="row">
             <div class="small-3 columns">
                 <label for="middle-label" class="middle">Minimum Retweets</label>
@@ -97,15 +96,16 @@
             </div>
 
             <input type="submit" class="button large expanded" value="Search">
+
         </form>
         </div>
-	  
+
         <div class="medium-6 columns">
             <h3>Results</h3>
-            <p id="data" style="overflow-y: scroll;">foo</p>
+            <p id="data" style="overflow-y: scroll; border: 1px solid #cccccc; height: 400px;">{{ data }}</p>
         </div>
     </div>
-    
+
     <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.4.3/js/foundation.js"</script>
     <script>
@@ -113,6 +113,3 @@
     </script>
   </body>
 </html>
-
-
-    
