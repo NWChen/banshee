@@ -23,7 +23,7 @@ def test_api_retweets():
     print(statuses)
 
 def test_tweet_searcher():
-    search = TweetrSearcher('?q=donald%20trump&src=typd&lang=en')
+    search = TweetSearcher('?q=donald%20trump&src=typd&lang=en')
     print(search.get_tweets(3))
 
 test_tweet_searcher()

@@ -48,18 +48,37 @@ class TweetSearcher(object):
 
 		for t in soup.find_all('li', {'data-item-type':'tweet'}):        
 
-			username = (t.find('span', {'class':'username'}).get_text())
-			link = ('https://twitter.com' + t.small.a['href'] if t.small is not None else '')
-			date = (t.small.a['title'] if t.small is not None else '')
-			stats = (t.find('div', {'class': 'ProfileTweet-actionList js-actions'}).get_text().replace('\n',''
-				) if t.find('div', {'class': 'ProfileTweet-actionList js-actions'}) is not None else '')
+			username = t.find('span', {'class':'username'})
+			if username is not None:
+				username = username.get_text()
+			else:
+				username = ''
+			link = 'https://twitter.com' + t.small.a['href'] if t.small is not None else ''
+			date = t.small.a['title'] if t.small is not None else ''
 			text = (t.p.get_text())
+			stats = t.find('div', {'class': 'ProfileTweet-actionList js-actions'})
+			# format the stats into a dict
+			if stats is not None:
+				stats = stats.get_text().replace('\n','')
+				stats_formatted = {}
+				i = 0
+				words = ['Reply', 'Retweet', 'Retweeted', 'Like', 'Liked']
+				for w in words:
+					i += len(w)
+					count = ''
+					while i < len(stats) and stats[i] != 'R' and stats[i] != 'L':
+						char = stats[i]
+						count += char
+						i += 1
+					if not count:
+						count = '0'
+					stats_formatted[w] = count
 	            
 			tweet = {
 			'url': link,
 			'user': username,
 			'date': date,
-			'stats': stats,
+			'stats': stats_formatted,
 			'content': text,
 			}
 			tweets.append(tweet)
