@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 from selenium import webdriver
 
 
-class KeywordSearcher(object):
+class TweetSearcher(object):
 
 	def __init__(self, query=''):
 		"""
@@ -13,7 +13,7 @@ class KeywordSearcher(object):
 		"""
 		self.browser = webdriver.Chrome()
 
-		base_url = 'https://twitter.com/search?q='
+		base_url = 'https://twitter.com/search'
 		url = base_url + query 
 
 		self.browser.get(url)

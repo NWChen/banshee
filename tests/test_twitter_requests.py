@@ -2,7 +2,7 @@ import sys
 import os
 sys.path.append(os.getcwd() + '/../')
 from scrapers.twitter_requests import TwitterRequests
-from scrapers.keyword_searcher import KeywordSearcher
+from scrapers.twitter_searcher import TweetSearcher
 
 def test_api_get_by_username():
     """
@@ -22,8 +22,8 @@ def test_api_retweets():
     statuses = scrape.get_retweets(929717762422988801)
     print(statuses)
 
-def test_keyword_searcher():
-    search = KeywordSearcher('donald%20trump&src=typd&lang=en')
+def test_tweet_searcher():
+    search = TweetrSearcher('?q=donald%20trump&src=typd&lang=en')
     print(search.get_tweets(3))
 
-test_keyword_searcher()
+test_tweet_searcher()
