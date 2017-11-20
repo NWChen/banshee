@@ -14,13 +14,24 @@ socketio = SocketIO(app)
 '''
 Serialize JSON objects that include datetimes.
 '''
-def json_serial(obj):
-    if isinstance(obj, (datetime, date)):
-        return obj.isoformat()
+def json_serial(list_of_objs):
+    for objs in list_of_objs: #TODO: make this more efficient
+        for key in objs.keys():
+            if isinstance(objs[key], (datetime, date)):
+                objs[key] = objs[key].isoformat()
+    return objs
 
 @socketio.on('connect', namespace='/stream')
-def connect():
+def client_connect():
     print('CONNECTED')
+
+@socketio.on('inputs', namespace='/stream')
+def handle_inputs(data):
+    keywords = data['keywords'].split(' ')
+    tweets = scraper.get_by_keywords(keywords)
+    tweets = json.dumps(json_serial(tweets))
+    socketio.emit('tweets', {'tweets': tweets}, namespace='/stream')
+    print('emitted')
 
 @app.route('/')
 def index():
