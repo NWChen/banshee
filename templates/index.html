@@ -12,18 +12,6 @@
     <script type="text/javascript" src="{{ url_for('static', filename='js/background-scripts.js') }}"></script>
   </head>
   <body>
-    <script type="text/javascript">
-        $(document).ready(function() {
-
-            var socket = io.connect('http://' + document.domain + ':' + location.port + '/stream');
-            console.log(socket);
-            socket.on('connect', function() {
-                $('#search').click(function() {
-                    socket.emit('search', {
-                });
-            });
-        });
-    </script>
     <div class="top-bar">
       <div class="row">
         <div class="top-bar-left">
