@@ -19,10 +19,17 @@ $(document).ready(function() {
     var socket = io.connect('http://' + document.domain + ':' + location.port + '/stream');
     socket.on('connect', function() {
         console.log('CONNECTED');
+
+        // Client event handlers
         $('#search').click(function() {
             inputs = get_inputs();
-            console.log(inputs);
             send_inputs(socket, inputs); 
+        });
+
+        // Socket event handlers
+        socket.on('tweets', function(data) {
+            console.log(data);
+            $('#data').html(data['tweets']);
         });
     });
 });
