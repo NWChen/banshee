@@ -11,11 +11,11 @@ class TweetSearcher(object):
 		Initializes the browser based on the query path
 		example path: 'donald%20trump&src=typd&lang=en'
 		"""
-		self.browser = webdriver.Chrome()
-
+		options = webdriver.ChromeOptions()
+		options.add_argument('headless')
+		self.browser = webdriver.Chrome(chrome_options=options)
 		base_url = 'https://twitter.com/search'
 		url = base_url + query 
-
 		self.browser.get(url)
 
 	def scroller(self, scrolls=1):
@@ -42,12 +42,12 @@ class TweetSearcher(object):
 		Takes in an initialized browser and number of scrolls
 		"""
 		tweets = []
-	  
 		# scroll and collect the data into beautiful soup for parsing
 		soup = BeautifulSoup(self.scroller(scrolls), 'html.parser')
 
 		for t in soup.find_all('li', {'data-item-type':'tweet'}):        
 
+			# scrape out the relevant tweet info
 			username = t.find('span', {'class':'username'})
 			if username is not None:
 				username = username.get_text()

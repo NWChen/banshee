@@ -22,7 +22,7 @@ class Requests(object):
 		return search.get_tweets(scrolls)
 
 	@classmethod
-	def search_location(cls, location:str, mile_radius:15, scrolls=1):
+	def search_location(cls, location:str, mile_radius=15, scrolls=1):
 		"""
 		Searches all tweets around a certain mile radius
 		defaults to 15 miles

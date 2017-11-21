@@ -8,7 +8,7 @@ from scrapers.search_requests import Requests
 
 pprint.pprint(Requests.search_user('realdonaldtrump'))
 print('done')
-pprint.pprint(Requests.search_location('chicago', 20))
+pprint.pprint(Requests.search_location('chicago', 10))
 print('done')
 pprint.pprint(Requests.search_exact_keywords(['chipotle', 'subway']))
 print('done')
