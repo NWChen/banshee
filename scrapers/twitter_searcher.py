@@ -1,5 +1,4 @@
 import os
-import sys
 import time
 
 from bs4 import BeautifulSoup
@@ -17,19 +16,6 @@ class TweetSearcher(object):
         os.environ['PATH'] += ':%s' % chrome_path
         options = webdriver.ChromeOptions()
         options.add_argument('headless')
-        self.browser = webdriver.Chrome(chrome_options=options)
-        base_url = 'https://twitter.com/search'
-        url = base_url + query 
-        self.browser.get(url)
-
-    def __init__(self, query=''):
-        """
-        Initializes the browser based on the query path
-        example path: 'donald%20trump&src=typd&lang=en'
-        """
-        options = webdriver.ChromeOptions()
-        options.add_argument('--headless')
-        options.add_argument('--disable-gpu')
         self.browser = webdriver.Chrome(chrome_options=options)
         base_url = 'https://twitter.com/search'
         url = base_url + query 
