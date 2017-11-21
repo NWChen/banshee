@@ -10,12 +10,13 @@ class TweetSearcher(object):
     def __init__(self, query=''):
         """
         Initializes the browser based on the query path
-        example path: 'donald%20trump&src=typd&lang=en'
+        example path: '?q=donald%20trump&src=typd&lang=en'
         """
         chrome_path = '%s' % os.path.dirname(os.path.realpath(__file__))
         os.environ['PATH'] += ':%s' % chrome_path
         options = webdriver.ChromeOptions()
-        options.add_argument('headless')
+        options.add_argument('--headless')
+        options.add_argument('--disable-gpu')
         self.browser = webdriver.Chrome(chrome_options=options)
         base_url = 'https://twitter.com/search'
         url = base_url + query 
