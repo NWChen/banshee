@@ -22,19 +22,18 @@ class TweetSearcher(object):
         url = base_url + query 
         self.browser.get(url)
 
-	def __init__(self, query=''):
-		"""
-		Initializes the browser based on the query path
-		example path: 'donald%20trump&src=typd&lang=en'
-		"""
-		options = webdriver.ChromeOptions()
-		options.add_argument('--headless')
-		options.add_argument('--disable-gpu')
-		self.browser = webdriver.Chrome(chrome_options=options)
-		base_url = 'https://twitter.com/search'
-		url = base_url + query 
-		self.browser.get(url)
->>>>>>> a18760b9e57c30abe815f1d8cc4a92253fbcdf50
+    def __init__(self, query=''):
+        """
+        Initializes the browser based on the query path
+        example path: 'donald%20trump&src=typd&lang=en'
+        """
+        options = webdriver.ChromeOptions()
+        options.add_argument('--headless')
+        options.add_argument('--disable-gpu')
+        self.browser = webdriver.Chrome(chrome_options=options)
+        base_url = 'https://twitter.com/search'
+        url = base_url + query 
+        self.browser.get(url)
 
     def scroller(self, scrolls=1):
         """
