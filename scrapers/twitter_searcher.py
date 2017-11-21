@@ -12,7 +12,8 @@ class TweetSearcher(object):
 		example path: 'donald%20trump&src=typd&lang=en'
 		"""
 		options = webdriver.ChromeOptions()
-		options.add_argument('headless')
+		options.add_argument('--headless')
+		options.add_argument('--disable-gpu')
 		self.browser = webdriver.Chrome(chrome_options=options)
 		base_url = 'https://twitter.com/search'
 		url = base_url + query 
