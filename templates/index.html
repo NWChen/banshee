@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Banshee</title>
     <link rel="stylesheet" href="https://dhbhdrzi4tiry.cloudfront.net/cdn/sites/foundation.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"
     integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
@@ -93,14 +94,11 @@
 
         <div class="medium-6 columns">
             <h3>Results</h3>
-
-			<!-- You need to call mustache in the header right Neil? Happy to figure this out and fix it, but I think that will be much easier with your part -->
 				<fieldset class = "fieldset">
 					<legend><strong>{{ name }}</strong></legend>
-						<p>{{ text }}<br><font color="grey">{{ created_at }}</font></p>
+						<p class="content"><br><font color="grey">timestamp</font></p>
 						<a href="https://twitter.com/{{ name }}/status/{{ id_str }}">Tweet ID: {{ id_str }}</a>
 				</fieldset>
-				
         </div>
     </div>
 

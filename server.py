@@ -41,11 +41,19 @@ Listen to and process inputs. Return outputs to the client.
 '''
 @socketio.on('inputs', namespace='/stream')
 def handle_inputs(data):
-    print(data)
+    username = data['username']
     exact_phrase = data['exact_phrase'] #TODO: change fields to the new form inputs
-    tweets = scraper.search_exact_phrase(exact_phrase)
+    tweets = []
+    if exact_phrase:
+        tweets.extend(scraper.search_exact_phrase(exact_phrase))
+    if username:
+        temp = scraper.search_user(username) #TODO: clean this up
+        tweets.extend(temp)
     tweets = json.dumps(serial_json(tweets))
-    socketio.emit('data', {'data': tweets}, namespace='/stream')
+
+    keywords = exact_phrase #TODO: adapt this for other fields too
+    print(tweets, keywords)
+    socketio.emit('data', {'data': tweets, 'keywords': keywords}, namespace='/stream')
 
 '''
 Serve homepage.
