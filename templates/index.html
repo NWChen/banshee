@@ -93,7 +93,14 @@
 
         <div class="medium-6 columns">
             <h3>Results</h3>
-            <p id="data" style="overflow-y: scroll; border: 1px solid #cccccc; height: 400px;"></p>
+
+			<!-- You need to call mustache in the header right Neil? Happy to figure this out and fix it, but I think that will be much easier with your part -->
+				<fieldset class = "fieldset">
+					<legend><strong>{{ name }}</strong></legend>
+						<p>{{ text }}<br><font color="grey">{{ created_at }}</font></p>
+						<a href="https://twitter.com/{{ name }}/status/{{ id_str }}">Tweet ID: {{ id_str }}</a>
+				</fieldset>
+				
         </div>
     </div>
 
