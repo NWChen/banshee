@@ -75,5 +75,5 @@ class TweetSearcher(object):
             'content': text,
             }
             tweets.append(tweet)
-        print(len(tweets))
-        return tweets[:1]
+
+        return tweets

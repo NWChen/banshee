@@ -41,7 +41,7 @@ Listen to and process inputs. Return outputs to the client.
 '''
 @socketio.on('inputs', namespace='/stream')
 def handle_inputs(data):
-    # this seen set should be outside the streaming loop
+    # this seen set (cache) should be outside the streaming loop
     seen_tweets = set()
     username = data['username']
     exact_phrase = data['exact_phrase'] #TODO: change fields to the new form inputs
@@ -59,9 +59,11 @@ def handle_inputs(data):
             filtered.append(tweet)
             seen_tweets.add(tweet['url'])
     tweets = filtered
-    # cleaning up the cache- optional
-    if len(seen_tweets) > 1000:
-        seen_tweets = set()
+    # optional- to create two cache sets, one for last batch, one for current batch
+    # then replace last = current at the end of the loop
+    # this would be because no more than 40 tweets will arrive from each request
+    # so no need to remember further back than the last batch or two
+
     tweets = json.dumps(serial_json(tweets))
 
     keywords = exact_phrase #TODO: adapt this for other fields too
