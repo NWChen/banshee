@@ -1,25 +1,19 @@
-import os
 import time
 
 from bs4 import BeautifulSoup
-from selenium import webdriver
 
 
 class TweetSearcher(object):
 
-    def __init__(self, query=''):
+    def __init__(self, browser, query=''):
         """
-        Initializes the browser based on the query path
-        example path: '?q=donald%20trump&src=typd&lang=en'
+        browser needs to be instanciated by the time it is passed in
+        browser gets the url based on the query
+        example query path: '?q=donald%20trump&src=typd&lang=en'
         """
-        chrome_path = '%s' % os.path.dirname(os.path.realpath(__file__))
-        os.environ['PATH'] += ':%s' % chrome_path
-        options = webdriver.ChromeOptions()
-        options.add_argument('--headless')
-        options.add_argument('--disable-gpu')
-        self.browser = webdriver.Chrome(chrome_options=options)
+        self.browser = browser
         base_url = 'https://twitter.com/search'
-        url = base_url + query 
+        url = base_url + query
         self.browser.get(url)
 
     def scroller(self, scrolls=1):
@@ -27,17 +21,12 @@ class TweetSearcher(object):
         scrolls the given browser for a certain number of times, defined by count
         returns the browser web page data
         """
-        cur = self.browser.execute_script('return document.body.scrollHeight')
         count = 0
-        while count < scrolls or prev == cur:
-            prev = cur
+        while count < scrolls:
             self.browser.execute_script('window.scrollTo(0, document.body.scrollHeight);')
             time.sleep(1)
-            cur = self.browser.execute_script('return document.body.scrollHeight')
             count += 1
-
         data = self.browser.page_source
-        self.browser.close()
         return data
 
     def get_tweets(self, scrolls=1):
@@ -86,5 +75,5 @@ class TweetSearcher(object):
             'content': text,
             }
             tweets.append(tweet)
-
-        return tweets
+        print(len(tweets))
+        return tweets[:1]

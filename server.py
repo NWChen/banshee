@@ -1,7 +1,7 @@
 from datetime import date, datetime
 from flask import Flask, jsonify, render_template, request, Response
 from flask_socketio import SocketIO
-from scrapers.search_requests import Requests as scraper
+from scrapers.search_requests import Requests as Scraper
 from time import sleep
 
 import json
@@ -44,6 +44,7 @@ def handle_inputs(data):
     username = data['username']
     exact_phrase = data['exact_phrase'] #TODO: change fields to the new form inputs
     tweets = []
+    scraper = Scraper()
     if exact_phrase:
         tweets.extend(scraper.search_exact_phrase(exact_phrase))
     if username:
