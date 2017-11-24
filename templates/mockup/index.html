@@ -89,6 +89,37 @@
 
             <button id="search" class="button large expanded">Search</button>
 
+			<div class="row">
+			  <div class="columns">
+				<ul class="accordion" data-accordion>
+			  <li class="accordion-item" data-accordion-item>
+				<a href="#" class="accordion-title"><strong>Set up Alert for Current Query</strong></a>
+				<div class="accordion-content" data-tab-content >
+				  <h3>Additonal Parameters for Alert</h3>
+				   <div class="row">
+						<div class="small-8 columns">
+							<label for="middle-label" class="middle">When the above query returns more than </label>
+						</div>
+						<div class="small-4 columns">
+								<input type="text" id="all_words" class="middle-label" placeholder="5 tweets per minute">
+							</div>
+					 </div>
+					<div class="row">
+							<div class="small-6 columns">
+								<label for="middle-label" class="middle">Send an email to </label>
+							</div>
+							<div class="small-6 columns">
+								<input type="text" id="all_words" class="middle-label" placeholder="me@example.com">
+							</div>
+						</div>
+					<button id="search" class="success button large expanded">Create Alert</button>
+
+				</div>
+			  </li>
+			</ul>
+			  </div>
+			</div>
+			
         </div>
 
         <div class="medium-6 columns">
@@ -118,7 +149,7 @@
     </div>
 
     <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.4.3/js/foundation.js"</script>
+	<script src="https://dhbhdrzi4tiry.cloudfront.net/cdn/sites/foundation.js"></script>
     <script>
       $(document).foundation();
     </script>
