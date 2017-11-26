@@ -10,8 +10,8 @@
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"
     integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
       crossorigin="anonymous"></script>
+    <script src="js/handlebars.js"></script>
     <script src="js/socket.io.js"></script>
-    <script src="js/handlebars-v4.0.11.js'"></script>
     <script type="text/javascript" src="js/background-scripts.js"></script>
   </head>
   <body>
@@ -122,16 +122,16 @@
 
         <div class="medium-6 columns">
             <h3>Results</h3>
-            <script id="tweet-template" type="text/x-handlebars-template">
-                {{ #each tweets }}
-                    {{ #each tweet }}
-                        <fieldset class = "fieldset">
-                            <legend><strong>{{ this.name }}</strong></legend>
-                                <p class="content">{{ this.text }}<br><font color="grey">{{ this.timestamp }}</font></p>
-                                <a href="https://twitter.com/{{ name }}/status/{{ this.id_str }}">Tweet ID: {{ this.id_str }}</a>
+            <script id="data-template" type="text/x-handlebars-template">
+                {{#each tweets}}
+                    {{#each this}}
+                        <fieldset class="fieldset">
+                            <legend><strong>{{this.user}}</strong></legend>
+                                <p class="content">{{this.content}}<br><font color="grey">{{this.date}}</font></p>
+                                <a href="{{this.url}}"><!--Tweet ID: {{this.id_str}}</a>-->
                         </fieldset>
-                    {{ /each }}
-                {{ /each }}
+                    {{/each}}
+                {{/each}}
             </script>
             <div class="content-placeholder"></div>
         </div>
