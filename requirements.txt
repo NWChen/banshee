@@ -1,5 +1,8 @@
-tweepy>=3.5.0
-Flask
-flask-socketio
+## The following requirements were added by pip freeze:
 bs4
+Flask
+Flask-Redis
+Flask-SocketIO
+redis
 selenium
+tweepy>=3.5.0
