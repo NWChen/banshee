@@ -38,6 +38,7 @@ const update_template = function(data, template) {
 $(document).ready(function() {
     var socket = io.connect('http://' + document.domain + ':' + location.port + '/stream');
     var template = Handlebars.compile($('#data-template').html());
+    var RESPONSE_TIMEOUT = 100;
 
     /*
      * If WebSocket connection between client and server fails, we have a problem,
@@ -62,8 +63,9 @@ $(document).ready(function() {
         socket.on('data', function(data) {
             console.log('RECEIVED DATA');
             update_template(data, template);
-            socket.emit('more'); // Ask for more data from the server.
-            console.log('ASKING FOR MORE');
+            setTimeout(function() {
+                socket.emit('more'); // Ask for more data from the server.
+            }, RESPONSE_TIMEOUT);
         });
     });
 });

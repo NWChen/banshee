@@ -5,7 +5,7 @@ from time import sleep
 
 class Firehose(Thread):
 
-    def __init__(self, query_interval=1, max_tweets=40):
+    def __init__(self, query_interval=1, max_tweets=10):
         Thread.__init__(self)
         self.scraper = Requests()
 
@@ -37,7 +37,10 @@ class Firehose(Thread):
     Get most recent tweets.
     '''
     def get_tweets(self):
-        return list(self.queue.values())
+        data = list(self.queue.values())
+        data.reverse() # move most recent tweets to the top (index 0) of the list
+        print(data)
+        return data
 
     '''
     Run this thread.
@@ -48,7 +51,6 @@ class Firehose(Thread):
                 new_data = self.scraper_funcs[option](value) # call the corresponding scraper function, passing in the corresponding user-defined parameters
                 new_data_ids = [self.hash_tweet(tweet) for tweet in new_data]
                 self.queue.update(zip(new_data_ids, new_data))
-                print(self.queue)
             print('FETCHED %d TWEETS' % len(self.queue.keys()))
             while len(self.queue.keys()) > self.max_tweets: # trim the queue to prevent overflow
                 self.queue.popitem(last=False)
