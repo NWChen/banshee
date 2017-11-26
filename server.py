@@ -50,6 +50,8 @@ def handle_inputs(data):
     # this seen set (cache) should be outside the streaming loop
     seen_tweets = set()
 
+    #TODO: this is pretty hacky and feels wrong
+    #TODO: add support for rest of API calls (intersections of subsets of queries)
     tweets = []
     if username:
         data = scraper.search_user(username)
