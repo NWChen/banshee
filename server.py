@@ -1,5 +1,5 @@
 from datetime import date, datetime
-from flask import Flask, jsonify, request, Response
+from flask import Flask, jsonify, request, Response, send_file
 from flask_socketio import SocketIO
 from scrapers.search_requests import Requests as Scraper
 from time import sleep
