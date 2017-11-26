@@ -7,10 +7,11 @@
     <link rel="stylesheet" href="https://dhbhdrzi4tiry.cloudfront.net/cdn/sites/foundation.min.css">
 	<link href='https://cdnjs.cloudflare.com/ajax/libs/foundicons/3.0.0/foundation-icons.css' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"
     integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
       crossorigin="anonymous"></script>
+    <script src="{{ url_for('static', filename='js/socket.io.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/handlebars-v4.0.11.js') }}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='js/background-scripts.js') }}"></script>
   </head>
   <body>
@@ -128,11 +129,18 @@
 
         <div class="medium-6 columns">
             <h3>Results</h3>
-				<fieldset class = "fieldset">
-					<legend><strong>{{ name }}</strong></legend>
-						<p class="content">{{ text }}<br><font color="grey">{{ timestamp }}</font></p>
-						<a href="https://twitter.com/{{ name }}/status/{{ id_str }}">Tweet ID: {{ id_str }}</a>
-				</fieldset>
+            <script id="tweet-template" type="text/x-handlebars-template">
+                {{ #each tweets }}
+                    {{ #each tweet }}
+                        <fieldset class = "fieldset">
+                            <legend><strong>{{ this.name }}</strong></legend>
+                                <p class="content">{{ this.text }}<br><font color="grey">{{ this.timestamp }}</font></p>
+                                <a href="https://twitter.com/{{ name }}/status/{{ this.id_str }}">Tweet ID: {{ this.id_str }}</a>
+                        </fieldset>
+                    {{ /each }}
+                {{ /each }}
+            </script>
+            <div class="content-placeholder"></div>
         </div>
     </div>
 
