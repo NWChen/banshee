@@ -1,22 +1,23 @@
+from collections import OrderedDict
 from scrapers.search_requests import Requests
 from threading import Thread
 from time import sleep
 
 class Firehose(Thread):
 
-    def __init__(self, query_interval=1):
+    def __init__(self, query_interval=1, max_tweets=40):
         Thread.__init__(self)
         self.scraper = Requests()
 
-        self.ids = set() # set of unique tweet ids
-        self.queue = [] # queue of tweets to be pushed to the frontend
+        self.queue = OrderedDict() # queue of tweets to be pushed to the frontend
         self.query_interval = query_interval # time, in seconds, to wait between querying the scraper
+        self.max_tweets = max_tweets
 
         self.options = {} # query types, e.g. username, location, ...
         self.scraper_funcs = {'username': self.scraper.search_user, 'location': self.scraper.search_location, 'any_words': self.scraper.search_partial_keywords, 'all_words': self.scraper.search_exact_keywords, 'exact_phrase': self.scraper.search_exact_phrase} # pairs query types with corresponding scraper functions
                     
     '''
-    Hash a tweet for convenient storage in `ids`.
+    Hash a tweet using its tweet id.
     '''
     def hash_tweet(self, tweet: dict):
         id = tweet['url']
@@ -33,15 +34,22 @@ class Firehose(Thread):
                 self.options[option] = options[option]
 
     '''
+    Get most recent tweets.
+    '''
+    def get_tweets(self):
+        return list(self.queue.values())
+
+    '''
     Run this thread.
     '''
     def run(self):
         while True:
-            print('im gettin your shit')
             for option, value in self.options.items():
                 new_data = self.scraper_funcs[option](value) # call the corresponding scraper function, passing in the corresponding user-defined parameters
-                self.ids.union([self.hash_tweet(tweet) for tweet in new_data])
-                self.queue.extend(new_data)
-            self.queue = [tweet for tweet in self.queue if self.hash_tweet(tweet) not in self.ids] # remove duplicates from tweet queue
-            # TODO: truncate queue if it exceeds a certain length
+                new_data_ids = [self.hash_tweet(tweet) for tweet in new_data]
+                self.queue.update(zip(new_data_ids, new_data))
+                print(self.queue)
+            print('FETCHED %d TWEETS' % len(self.queue.keys()))
+            while len(self.queue.keys()) > self.max_tweets: # trim the queue to prevent overflow
+                self.queue.popitem(last=False)
             sleep(self.query_interval)
