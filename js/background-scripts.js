@@ -57,11 +57,13 @@ $(document).ready(function() {
 
         /*
          * Handle behaviors upon receiving data from the server.
-         * This happens asynchronously, i.e. no signals for data are sent from the client to the server.
-         * TODO make this actually true via streaming data
+         * Loop this behavior by asking for more data from the server.
          */
         socket.on('data', function(data) {
+            console.log('RECEIVED DATA');
             update_template(data, template);
+            socket.emit('more'); // Ask for more data from the server.
+            console.log('ASKING FOR MORE');
         });
     });
 });
