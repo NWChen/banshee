@@ -28,11 +28,9 @@ const send_inputs = function(socket, inputs) {
  * The template for this content is built into `index.html`.
  */
 const update_template = function(data, template) {
+    console.log(data);
     var context = {
-        'name': data['name'],
-        'text': data['text'],
-        'timestamp': data['timestamp'],
-        'id_str': data['id_str']
+        'tweets': data
     };
     var compiled_html = template(context);
     $('.content-placeholder').html(compiled_html);
@@ -40,7 +38,7 @@ const update_template = function(data, template) {
 
 $(document).ready(function() {
     var socket = io.connect('http://' + document.domain + ':' + location.port + '/stream');
-    var template = Handlebars.compile($('#address-template').html());
+    var template = Handlebars.compile($('#data-template').html());
 
     /*
      * If WebSocket connection between client and server fails, we have a problem,
