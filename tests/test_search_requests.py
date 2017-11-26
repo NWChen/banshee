@@ -1,7 +1,7 @@
 import sys
 import os
 import pprint
-sys.path.append(os.getcwd() + '/../')
+sys.path.append(os.getcwd())
 
 from scrapers.search_requests import Requests 
 
