@@ -28,6 +28,14 @@ def client_connect():
     print('Connected to /stream')
 
 '''
+Extract tweet ID from tweet URL given entire tweet object.
+'''
+def get_id(tweet):
+    id = tweet['url']
+    id = id[id.rfind('/')+1:]
+    return id
+
+'''
 Listen to and process inputs. Return outputs to the client.
 '''
 @socketio.on('inputs', namespace='/stream')
@@ -58,6 +66,8 @@ def handle_inputs(data):
     # this would be because no more than 40 tweets will arrive from each request
     # so no need to remember further back than the last batch or two
 
+    for tweet in tweets:
+        tweet['id'] = get_id(tweet)
     socketio.emit('data', {'data': tweets}, namespace='/stream')
 
 '''
