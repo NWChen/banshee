@@ -29,13 +29,14 @@ Listen to and process inputs.
 @socketio.on('inputs', namespace='/stream')
 def handle_inputs(data):
     firehose.set_options(data)
+    socketio.emit('data', {'data': []}, namespace='/stream')
 
 '''
 Stream outputs to the client.
 '''
 @socketio.on('more', namespace='/stream')
 def more_data():
-    tweets = firehose.queue
+    tweets = firehose.get_tweets()
     socketio.emit('data', {'data': tweets}, namespace='/stream')
 
 '''
