@@ -28,7 +28,6 @@ const send_inputs = function(socket, inputs) {
  * The template for this content is built into `index.html`.
  */
 const update_template = function(data, template) {
-    console.log(data);
     var context = {
         'tweets': data
     };

@@ -41,7 +41,7 @@ Listen to and process inputs. Return outputs to the client.
 @socketio.on('inputs', namespace='/stream')
 def handle_inputs(data):
     username = data['username']
-    location = data['location']
+    location = data['nearest_location']
     mile_radius = data['mile_radius']
     any_words = data['any_words']
     all_words = data['all_words']
