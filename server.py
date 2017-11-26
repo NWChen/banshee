@@ -40,18 +40,37 @@ Listen to and process inputs. Return outputs to the client.
 '''
 @socketio.on('inputs', namespace='/stream')
 def handle_inputs(data):
+    username = data['username']
+    location = data['location']
+    mile_radius = data['mile_radius']
+    any_words = data['any_words']
+    all_words = data['all_words']
+    exact_phrase = data['exact_phrase']
+
     # this seen set (cache) should be outside the streaming loop
     seen_tweets = set()
-    username = data['username']
-    exact_phrase = data['exact_phrase'] #TODO: change fields to the new form inputs
+
     tweets = []
+    if username:
+        data = scraper.search_user(username)
+        tweets.extend(data)
+    if location:
+        if mile_radius:
+            data = scraper.search_location(location, int(mile_radius)) #TODO: validate mile_radius as int on frontend
+            tweets.extend(data)
+        else:
+            data = scraper.search_location(location)
+            tweets.extend(data)
+    if any_words:
+        data = scraper.search_partial_keywords(any_words)
+        tweets.extend(data)
+    if all_words:
+        data = scraper.search_exact_keywords(all_words)
+        tweets.extend(data)
     if exact_phrase:
         data = scraper.search_exact_phrase(exact_phrase)
         tweets.extend(data)
-    if username:
-        data = scraper.search_user(username) #TODO: clean this up
-        print(data)
-        tweets.extend(data)
+
     # this can be the implementation of the caching
     '''
     filtered = []
