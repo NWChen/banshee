@@ -14,7 +14,7 @@ class Firehose(Thread):
         self.max_tweets = max_tweets
 
         self.options = {} # query types, e.g. username, location, ...
-        self.scraper_funcs = {'username': self.scraper.search_user, 'location': self.scraper.search_location, 'any_words': self.scraper.search_partial_keywords, 'all_words': self.scraper.search_exact_keywords, 'exact_phrase': self.scraper.search_exact_phrase} # pairs query types with corresponding scraper functions
+        self.scraper_funcs = {'username': self.scraper.search_user, 'nearest_location': self.scraper.search_location, 'any_words': self.scraper.search_partial_keywords, 'all_words': self.scraper.search_exact_keywords, 'exact_phrase': self.scraper.search_exact_phrase} # pairs query types with corresponding scraper functions
                     
     '''
     Hash a tweet using its tweet id.
