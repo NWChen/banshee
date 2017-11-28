@@ -47,7 +47,10 @@ class Firehose(Thread):
     '''
     def get_tweets(self, num_tweets=10):
         data = list(self.queue.values())
-        data = data [:num_tweets]
+        if len(data) < num_tweets:
+            return data
+        data = data[len(data)-num_tweets:]
+        data = data[::-1]
         print(data)
         return data
 
@@ -60,10 +63,12 @@ class Firehose(Thread):
                 # call the corresponding scraper function,
                 # passing in the corresponding user-defined parameters
                 new_data = self.scraper_funcs[option](value)
+                print(new_data)
+                new_data = new_data[::-1]
                 new_data_ids = [self.hash_tweet(tweet) for tweet in new_data]
                 self.queue.update(zip(new_data_ids, new_data))
             print('FETCHED %d TWEETS' % len(self.queue.keys()))
-            # trim the queue to prevent overflow
             while len(self.queue.keys()) > self.max_tweets:
+                # trim the queue to prevent overflow
                 self.queue.popitem(last=False)
             sleep(self.query_interval)
