@@ -1,4 +1,4 @@
-from collections import OrderedDict
+from collections import defaultdict
 from scrapers.search_requests import Requests
 from threading import Thread
 from time import sleep
@@ -11,7 +11,7 @@ class Firehose(Thread):
         self.scraper = Requests()
 
         # queue of tweets to be pushed to the frontend
-        self.queue = OrderedDict()
+        self.queue = []
         # time, in seconds, to wait between querying the scraper
         self.query_interval = query_interval
         self.max_tweets = max_tweets
@@ -37,6 +37,7 @@ class Firehose(Thread):
     Process incoming parameters for scraping.
     '''
     def set_options(self, options: dict):
+        del self.queue[:] # clear queue
         self.options.clear()
         for option in options.keys():
             if options[option] != '':
@@ -46,29 +47,38 @@ class Firehose(Thread):
     Get most recent tweets.
     '''
     def get_tweets(self, num_tweets=10):
-        data = list(self.queue.values())
-        if len(data) < num_tweets:
-            return data
-        data = data[len(data)-num_tweets:]
-        data = data[::-1]
-        print(data)
-        return data
+        return queue[:num_tweets]
+
+    '''
+    Remove duplicate tweets (dictionaries) in a list. 
+    Duplicate tweets share the same id.
+    '''
+    def unduplicate(self, ls=list):
+        ids = [self.hash_tweet(tweet) for tweet in ls]
+        ids_count = defaultdict(int)
+        for id in ids:
+            ids_count[id] += 1
+        for tweet in ls:
+            id = hash_tweet(tweet):
+                if ids_count[id] > 1:
+                    del ls[tweet]
+                    ids_count[id] -= 1
+        return ls
 
     '''
     Run this thread.
     '''
     def run(self):
         while True:
-            for option, value in self.options.items():
-                # call the corresponding scraper function,
-                # passing in the corresponding user-defined parameters
-                new_data = self.scraper_funcs[option](value)
-                print(new_data)
-                new_data = new_data[::-1]
-                new_data_ids = [self.hash_tweet(tweet) for tweet in new_data]
-                self.queue.update(zip(new_data_ids, new_data))
-            print('FETCHED %d TWEETS' % len(self.queue.keys()))
-            while len(self.queue.keys()) > self.max_tweets:
-                # trim the queue to prevent overflow
-                self.queue.popitem(last=False)
+            try:
+                for option, value in self.options.items():
+                    # call the corresponding scraper function,
+                    # passing in the corresponding user-defined parameters
+                    data = self.scraper_funcs[option](value)
+                    self.queue = data + self.queue # append to front of queue
+                    self.queue = self.unduplicate(self.queue)
+                print('FETCHED %d TWEETS' % len(self.queue))
+                del self.queue[self.max_tweets:] # pop old elements
+            except RuntimeError: # new options (queries) submitted from user
+                pass 
             sleep(self.query_interval)
