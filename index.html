@@ -6,6 +6,7 @@
     <title>Banshee</title>
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.1.2/foundation.min.css" rel="stylesheet"/>
 	<link href='https://cdnjs.cloudflare.com/ajax/libs/foundicons/3.0.0/foundation-icons.css' rel='stylesheet' type='text/css'>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="css/styles.css">
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"
     integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
@@ -90,9 +91,21 @@
 					<input type="text" id="exact_phrase" class="middle-label" placeholder="the President of the United States">
 				</div>
             </div>
-
-            <button id="search" class="button large expanded">Search</button>
 			
+			<div class="text-center">
+			  <div class="search-button">
+				<button id="search" button type="button" class="button large expanded" data-loading-start>
+				  Search
+				</button>
+				<button type="button" class="success button large expanded hide" data-loading-end> 
+				  <i class='fa fa-refresh fa-spin'></i> Processing Search
+				</button>
+			  </div> <!-- refresh -->
+			  <div data-success-message class="callout success hide">
+				Search results are streaming!
+			  </div>
+			</div>
+						
 			<ul class="accordion accroot" data-accordion data-allow-all-closed='true'>
 			  <li class="accordion-item" data-accordion-item>
 				<a href="#" class="accordion-title"><strong>Set up Alert for Current Query</strong></a>
@@ -141,6 +154,17 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.1.2/foundation.js"></script>
     <script>
       $(document).foundation();
+    </script>
+	<script>
+      $('[data-loading-start]').click(function() {
+	  $(this).addClass('hide');
+	  $(this).parent().find('[data-loading-end]').removeClass('hide');
+	  setTimeout(function() {
+		$('[data-loading-start]').removeClass('hide');
+		$('[data-loading-end]').addClass('hide');
+		$('[data-success-message]').removeClass('hide')
+	  }, 5000)
+	});
     </script>
   </body>
 </html>
