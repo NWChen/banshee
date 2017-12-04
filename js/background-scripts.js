@@ -31,7 +31,6 @@ const highlight = function(html, tokens) {
     for(var i=0; i<tokens.length; i++) {
         html = html.toLowerCase().replace(tokens[i], pre_tag + tokens[i] + post_tag);
     }
-    console.log(html);
     return html;
 };
 
@@ -90,6 +89,12 @@ $(document).ready(function() {
          */
         socket.on('data', function(data) {
             console.log(data);
+            // Update streaming button
+            $('[data-loading-start]').removeClass('hide');
+            $('[data-loading-end]').addClass('hide');
+            $('[data-success-message]').removeClass('hide');
+
+            // Update tweet queue 
             compiled_html = update_template(data, template);
             compiled_html = highlight(compiled_html, get_desirable_tokens(inputs));
             $('.content-placeholder').html(compiled_html);
