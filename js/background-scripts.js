@@ -23,6 +23,30 @@ const send_inputs = function(socket, inputs) {
 };
 
 /*
+ * Highlight tokens in content.
+ */
+const highlight = function(html, tokens) {
+    pre_tag = '<span class=\'highlight\'>';
+    post_tag = '</span>';
+    for(var i=0; i<tokens.length; i++) {
+        html = html.toLowerCase().replace(tokens[i], pre_tag + tokens[i] + post_tag);
+    }
+    console.log(html);
+    return html;
+};
+
+/*
+ * Generate an array of tokens to highlight from an inputs dictionary.
+ */
+const get_desirable_tokens = function(inputs) {
+    tokens = [];
+    Object.keys(inputs).forEach(function(key) {
+        Array.prototype.push.apply(tokens, inputs[key].split(','));
+    });
+    return tokens;
+};
+
+/*
  * Update the tweet feed in `templates/index.html`.
  * Uses Handlebars expressions to dynamically update content.
  * The template for this content is built into `index.html`.
@@ -31,14 +55,16 @@ const update_template = function(data, template) {
     var context = {
         'tweets': data
     };
+    console.log(data)
     var compiled_html = template(context);
-    $('.content-placeholder').html(compiled_html);
+    return compiled_html;
 };
 
 $(document).ready(function() {
     var socket = io.connect('http://' + document.domain + ':' + location.port + '/stream');
+    var inputs = {};
     var template = Handlebars.compile($('#data-template').html());
-    var RESPONSE_TIMEOUT = 100;
+    var RESPONSE_TIMEOUT = 500;
 
     /*
      * If WebSocket connection between client and server fails, we have a problem,
@@ -53,7 +79,9 @@ $(document).ready(function() {
          * Sends values of all input boxes to the receiving WebSocket on the server.
          */
         $('#search').click(function() {
-            send_inputs(socket, get_inputs()); 
+            console.log('SEARCH PRESSED');
+            inputs = get_inputs();
+            send_inputs(socket, inputs); 
         });
 
         /*
@@ -61,8 +89,10 @@ $(document).ready(function() {
          * Loop this behavior by asking for more data from the server.
          */
         socket.on('data', function(data) {
-            console.log('RECEIVED DATA');
-            update_template(data, template);
+            console.log(data);
+            compiled_html = update_template(data, template);
+            compiled_html = highlight(compiled_html, get_desirable_tokens(inputs));
+            $('.content-placeholder').html(compiled_html);
             setTimeout(function() {
                 socket.emit('more'); // Ask for more data from the server.
             }, RESPONSE_TIMEOUT);

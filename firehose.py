@@ -47,7 +47,10 @@ class Firehose(Thread):
     Get most recent tweets.
     '''
     def get_tweets(self, num_tweets=10):
-        return queue[:num_tweets]
+        #return self.queue[:num_tweets]
+        tweet = self.queue[-1:]
+        del self.queue[-1:]
+        return tweet
 
     '''
     Remove duplicate tweets (dictionaries) in a list. 
@@ -58,11 +61,11 @@ class Firehose(Thread):
         ids_count = defaultdict(int)
         for id in ids:
             ids_count[id] += 1
-        for tweet in ls:
-            id = hash_tweet(tweet):
-                if ids_count[id] > 1:
-                    del ls[tweet]
-                    ids_count[id] -= 1
+        for i, tweet in enumerate(ls):
+            id = self.hash_tweet(tweet)
+            if ids_count[id] > 1:
+                del ls[i]
+                ids_count[id] -= 1
         return ls
 
     '''

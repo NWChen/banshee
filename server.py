@@ -14,7 +14,11 @@ Configure Flask app.
 app = Flask(__name__, static_url_path='')
 firehose = Firehose()
 firehose.start()
+
+server_queue = []
 socketio = SocketIO(app)
+
+MAX_TWEETS_ON_SCREEN = 10
 
 '''
 Confirm socket connection to the client.
@@ -36,14 +40,19 @@ Stream outputs to the client.
 '''
 @socketio.on('more', namespace='/stream')
 def more_data():
+    global server_queue
     tweets = firehose.get_tweets()
-    socketio.emit('data', {'data': tweets}, namespace='/stream')
+    server_queue = tweets + server_queue
+    socketio.emit('data', {'data': server_queue}, namespace='/stream')
+    if len(server_queue) > MAX_TWEETS_ON_SCREEN:
+        del server_queue[-1:]
 
 '''
 Serve homepage and related assets.
 '''
 @app.route('/')
 def root():
+    print('FETCH ROOT')
     return send_file('index.html')
 
 @app.route('/js/<path:path>')
