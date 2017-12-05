@@ -52,7 +52,7 @@ const get_desirable_tokens = function(inputs) {
  */
 const update_template = function(data, template) {
     var context = {
-        'tweets': data
+        'tweets': data,
     };
     console.log(data)
     var compiled_html = template(context);
@@ -89,6 +89,7 @@ $(document).ready(function() {
          */
         socket.on('data', function(data) {
             console.log(data);
+
             // Update streaming button
             $('[data-loading-start]').removeClass('hide');
             $('[data-loading-end]').addClass('hide');
