@@ -1,8 +1,8 @@
+from analysis.malice_watcher import MaliceWatcher
 from collections import defaultdict
 from scrapers.search_requests import Requests
 from threading import Thread
 from time import sleep
-
 
 class Firehose(Thread):
 
@@ -24,6 +24,8 @@ class Firehose(Thread):
             'any_words': self.scraper.search_partial_keywords, 
             'all_words': self.scraper.search_exact_keywords, 
             'exact_phrase': self.scraper.search_exact_phrase}
+
+        self.mw = MaliceWatcher()
                     
     '''
     Hash a tweet using its tweet id.
@@ -32,6 +34,24 @@ class Firehose(Thread):
         id = tweet['url']
         tweet['id'] = id[id.rfind('/')+1:]
         return tweet['id']
+
+    '''
+    Classify a tweet as malicious (1) or non-malicious (0).
+    '''
+    def malice_tweet(self, tweet: dict):
+        is_m = 0
+        print(tweet)
+        if tweet['content']:
+            is_m = self.mw.predict(tweet['content'])
+        tweet['malicious'] = is_m
+        return tweet
+
+    '''
+    Classify all tweets in a batch as [non]-malicious.
+    '''
+    def classify(self, queue: list):
+        queue = [self.malice_tweet(tweet) for tweet in queue]
+        return queue
 
     '''
     Process incoming parameters for scraping.
@@ -75,11 +95,12 @@ class Firehose(Thread):
         while True:
             try:
                 for option, value in self.options.items():
-                    # call the corresponding scraper function,
+                    # call the corresponding scraper function
                     # passing in the corresponding user-defined parameters
                     data = self.scraper_funcs[option](value)
                     self.queue = data + self.queue # append to front of queue
                     self.queue = self.unduplicate(self.queue)
+                    self.queue = self.classify(self.queue)
                 print('FETCHED %d TWEETS' % len(self.queue))
                 del self.queue[self.max_tweets:] # pop old elements
             except RuntimeError: # new options (queries) submitted from user
