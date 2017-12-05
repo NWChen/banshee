@@ -1,8 +1,10 @@
 ## The following requirements were added by pip freeze:
 bs4
 Flask
-Flask-Redis
 Flask-SocketIO
-redis
 selenium
 tweepy>=3.5.0
+numpy
+scipy
+sklearn
+pandas
