@@ -17,6 +17,7 @@ firehose.start()
 
 server_queue = []
 socketio = SocketIO(app)
+print('CLASSIFIER TRAINING')
 
 MAX_TWEETS_ON_SCREEN = 10
 
@@ -33,6 +34,8 @@ Listen to and process inputs.
 @socketio.on('inputs', namespace='/stream')
 def handle_inputs(data):
     firehose.set_options(data)
+    global server_queue
+    del server_queue[:]
     socketio.emit('data', {'data': []}, namespace='/stream')
 
 '''
@@ -42,6 +45,7 @@ Stream outputs to the client.
 def more_data():
     global server_queue
     tweets = firehose.get_tweets()
+
     server_queue = tweets + server_queue
     socketio.emit('data', {'data': server_queue}, namespace='/stream')
     if len(server_queue) > MAX_TWEETS_ON_SCREEN:
