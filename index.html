@@ -138,11 +138,17 @@
             <script id="data-template" type="text/x-handlebars-template">
                 {{#each tweets}}
                     {{#each this}}
+                        {{#if malicious}}
+                            <div class="warning">
+                        {{/if}}
                         <fieldset class="fieldset">
                             <legend><strong>{{this.user}}</strong></legend>
                                 <p class="content">{{this.content}}<br><font color="grey">{{this.date}}</font></p>
                                 <a href="{{this.url}}">Tweet ID: {{this.id}}</a>
                         </fieldset>
+                        {{#if malicious}}
+                            </div>
+                        {{/if}}
                     {{/each}}
                 {{/each}}
             </script>
@@ -156,7 +162,7 @@
       $(document).foundation();
     </script>
 	<script>
-      $('[data-loading-start]').click(function() {
+    $('[data-loading-start]').click(function() {
 	  $(this).addClass('hide');
 	  $(this).parent().find('[data-loading-end]').removeClass('hide');
 	});
