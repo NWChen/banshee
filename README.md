@@ -6,7 +6,7 @@
 
 ## Team Members
 ```
-Ori Aboodi, oda2102
+Ori,
 Zach Boughner, ztb2003
 Neil Chen, nwc2112
 Alan Hytonen, ajh2217
