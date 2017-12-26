@@ -1,9 +1,9 @@
 import tweepy
 
-consumer_key = 'GqrtpC3erxpZv7tdBBEus2MHk'
-consumer_secret = 'Ir2bFz8D9dfCT1F1zZpAHCJPWBO5xYPIdWcsvXy2kFzElZbdJw'
-access_token = '928826177736904705-sFin3mNUlpg16b5XZ99B6RlD5YAD1jx'
-access_token_secret = 'oQ37sdti1WH6HrzPLi9CPscaogGjdffvrlSpIYSoDWJGb'
+consumer_key = '' # need to create one for use
+consumer_secret = '' # need to create one for use
+access_token = '' # need to create one for use
+access_token_secret = '' # need to create one for use
 
 
 def get_api():
